@@ -1,0 +1,33 @@
+{% extends 'layout.html' %} {% block body %}
+<div class="container">
+	<br />
+	<h1>Vehicle Details:</h1>
+
+	<div id="definitions">
+		{% if data.status %}
+		<div class="definition">
+			<br />
+			<h3>Owner Details</h3>
+			<p><strong>Registration Number:</strong> {{ data.get('result', {}).get('reg_no', 'N/A') }}</p>
+			<p><strong>Registration Date:</strong> {{ data.get('result', {}).get('reg_date', 'N/A') }}</p>
+			<p><strong>State:</strong> {{ data.get('result', {}).get('state', 'N/A') }}</p>
+			<p><strong>Purchase Date:</strong> {{ data.get('result', {}).get('purchase_date', 'N/A') }}</p>
+			<p><strong>Owner Name:</strong> {{ data.get('result', {}).get('owner_name', 'N/A') }}</p>
+			<p><strong>Owner Father Name:</strong> {{ data.get('result', {}).get('owner_father_name', 'N/A') }}</p>
+			<p><strong>Owner Current Address Line1:</strong> {{ data.get('result', {}).get('current_address_line1', 'N/A') }}</p>
+			<p><strong>Owner Current Address Line2:</strong> {{ data.get('result', {}).get('current_address_line2', 'N/A') }}</p>
+			<p><strong>Owner Current Address Line3:</strong> {{ data.get('result', {}).get('current_address_line3', 'N/A') }}</p>
+			<p><strong>Vehicle Manufacturer Name:</strong> {{ data.get('result', {}).get('vehicle_manufacturer_name', 'N/A') }}</p>
+			<p><strong>Color:</strong> {{ data.get('result', {}).get('color', 'N/A') }}</p>
+			<p><strong>Engine Stage:</strong> {{ data.get('result', {}).get('norms_descr', 'N/A') }}</p>
+			<br />
+			<h3>Insurance Details</h3>
+			<p><strong>Insurance From:</strong> {{ data.get('result', {}).get('vehicle_insurance_details', {}).get('insurance_from', 'N/A') }}</p>
+			<p><strong>Insurance Upto:</strong> {{ data.get('result', {}).get('vehicle_insurance_details', {}).get('insurance_upto', 'N/A') }}</p>
+			<p><strong>Insurance Company Name:</strong> {{ data.get('result', {}).get('vehicle_insurance_details', {}).get('insurance_company_name', 'N/A') }}</p>
+			<p><strong>Policy Number:</strong> {{ data.get('result', {}).get('vehicle_insurance_details', {}).get('policy_no', 'N/A') }}</p>
+		</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

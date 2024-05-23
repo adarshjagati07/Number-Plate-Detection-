@@ -1,0 +1,161 @@
+{% extends 'layout.html' %} {% block body %}
+<div class="container">
+	<br /><br />
+	<h2>Upload the Image:</h2>
+	<form
+		action="#"
+		method="POST"
+		enctype="multipart/form-data"
+	>
+		<div class="input-group">
+			<input
+				type="file"
+				class="form-control"
+				name="image_name"
+				required
+			/>
+			<input
+				type="submit"
+				value="Upload"
+				class="btn btn-outline-secondary"
+			/>
+		</div>
+	</form>
+	{% if not upload %}
+	<div
+		style="margin-top:20px;font-family: Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #333; background-color: #f9f9f9; padding: 20px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);"
+	>
+		<h2 style="font-size: 24px; color: #333; margin-bottom: 20px;">Project Description: Vehicle Number Plate Detection and Enquiry</h2>
+		<p>
+			<strong>Overview:</strong><br />
+			The Vehicle Number Plate Detection and Enquiry project is aimed at developing a system capable of automatically detecting vehicle number plates and extracting relevant information for
+			further processing. Implemented using Python, object detection, and Optical Character Recognition (OCR) techniques with the assistance of Pytesseract, this project offers a comprehensive
+			solution for efficient vehicle monitoring and management.
+		</p>
+		<p>
+			<strong>Key Features:</strong><br />
+			- <strong>Number Plate Detection:</strong> Utilizing object detection algorithms, the system identifies and localizes vehicle number plates within images or video streams.<br />
+			- <strong>OCR Integration:</strong> Pytesseract is employed to perform Optical Character Recognition on the detected number plates, enabling the extraction of alphanumeric characters.<br />
+			- <strong>Vehicle Enquiry:</strong> Through integration with external databases or APIs, the system can conduct inquiries based on the extracted number plate information, providing access
+			to vehicle registration details, ownership information, and other relevant data.<br />
+			- <strong>Vehicle Detection:</strong> In addition to number plate recognition, the system can be extended to include vehicle detection capabilities. By leveraging machine learning models
+			or deep learning architectures, it can identify specific vehicle types, brands, or models within the captured images or video feeds.
+		</p>
+		<p>
+			<strong>Benefits:</strong><br />
+			- <strong>Enhanced Surveillance:</strong> Enables automated monitoring of vehicles in various settings such as parking lots, toll booths, and traffic intersections, enhancing security and
+			surveillance capabilities.<br />
+			- <strong>Efficient Traffic Management:</strong> Facilitates the collection of real-time data on vehicle movement and registration, aiding in traffic flow analysis and optimization
+			efforts.<br />
+			- <strong>Improved Law Enforcement:</strong> Provides law enforcement agencies with valuable tools for vehicle identification, tracking, and enforcement of traffic regulations.
+		</p>
+		<p>
+			<strong>Future Enhancements:</strong><br />
+			- <strong>Real-Time Alerts:</strong> Integration of real-time alerting mechanisms to notify relevant authorities of suspicious or unauthorized vehicle activities.<br />
+			- <strong>Multi-Language Support:</strong> Extending OCR capabilities to support multiple languages for number plate recognition in diverse geographical regions.<br />
+			- <strong>Cloud Integration:</strong> Leveraging cloud computing resources for scalable processing and storage of vehicle data, enabling seamless access and management across distributed
+			environments.
+		</p>
+		<p>
+			<strong>Conclusion:</strong><br />
+			The Vehicle Number Plate Detection and Enquiry project offers a versatile solution for automating the detection, recognition, and inquiry of vehicle number plates. By harnessing the power
+			of Python, object detection, and OCR technologies, combined with custom vehicle detection capabilities, it provides a robust platform for enhancing surveillance, traffic management, and
+			law enforcement efforts.
+		</p>
+	</div>
+	{% endif %}
+</div>
+
+{% if upload %}
+<div class="container">
+	<br /><br />
+	<table>
+		<tr>
+			<td>
+				<img
+					class="rounded float-left img-fluid"
+					src="/static/upload/{{ upload_image }}"
+					alt=""
+				/>
+			</td>
+			<td>
+				<img
+					class="rounded float-right img-fluid"
+					src="/static/predict/{{ upload_image }}"
+					alt=""
+				/>
+			</td>
+		</tr>
+	</table>
+	<br />
+	<table style="border: solid black; width: 100%;">
+		<tr style="border: solid black;">
+			<th>Cropped Licence Plate Image</th>
+			<th>Text</th>
+		</tr>
+		<tr style="border: solid black;">
+			<td>
+				<img
+					class="img-fluid"
+					src="/static/roi/{{ upload_image }}"
+					alt=""
+				/>
+			</td>
+			<td style="background-color: greenyellow;">
+				<h1 class="display-8">{{ text }}</h1>
+			</td>
+		</tr>
+	</table>
+	<div
+		class="container"
+		style="margin-top:15px"
+	>
+		<h2>Vehicle Enquiry</h2>
+		<form
+			id="vehicleEnquiryForm"
+			method="post"
+			autocomplete="off"
+		>
+			<table style="align: center;border: solid black;height: 20px; width: 80%;">
+				<tr style="border: solid black; width: 80%; padding: 10px;">
+					<td>Registration Number:</td>
+					<td>
+						<input
+							type="text"
+							id="reg_no"
+							name="reg_no"
+							style="width:100%;"
+							value="{{ text }}"
+							required
+						/><br />
+					</td>
+				</tr>
+				<tr>
+					<td>Do you want to get Vehicle Enquiry?</td>
+					<td style="text-align:center">
+						<button
+							type="button"
+							onclick="submitForm()"
+							class="btn btn-primary"
+						>
+							Yes, Provide Details.
+						</button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</div>
+<script>
+	function submitForm() {
+	    var regNo = document.getElementById("reg_no").value;
+	    if (regNo) {
+	        var form = document.getElementById("vehicleEnquiryForm");
+	        form.action = "/vehicleEnquiry/" + encodeURIComponent(regNo);
+	        form.submit();
+	    } else {
+	        alert("Please enter a registration number.");
+	    }
+	}
+</script>
+{% endif %} {% endblock %}
